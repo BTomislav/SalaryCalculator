@@ -113,7 +113,8 @@
                 android:gravity="center"
                 android:inputType="textPersonName"
                 android:text="0"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:autofillHints="" />
 
             <EditText
                 android:textColor="#FFFF"
@@ -187,7 +188,6 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:text="0" />
-
 
         </LinearLayout>
 

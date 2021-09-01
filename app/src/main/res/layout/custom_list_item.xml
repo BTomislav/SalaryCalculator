@@ -38,7 +38,6 @@
             android:text=""></TextView>
     </LinearLayout>
 
-
     <TextView
         android:textColor="#FFFF"
         android:paddingTop="8dp"

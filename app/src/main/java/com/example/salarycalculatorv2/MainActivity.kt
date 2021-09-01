@@ -3,11 +3,8 @@ package com.example.salarycalculatorv2
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.text.Layout
 import android.view.Gravity
 import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -21,47 +18,47 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-
 class MainActivity : AppCompatActivity() {
 
-    var list= mutableListOf<Model>()
-    lateinit var CustomListAdapter : CustomAdapter
-    var salarySum: Double=0.0
-    var days: Int=0
-    var sumIn: Double=0.0
-    var sumOut: Double=0.0
-    var bonus=0.0
-    var tax=0.0
-    var wage=11.11
-    var currency="€"
-    var wage2=11.77
-    var BreakCheck=false
-    var breakTime: Double= 0.0
-    var showDays=true
-    var hours=0.0
-    var hoursTemp=0.0
-    
+    private var list= mutableListOf<Model>()
+    private lateinit var customListAdapter : CustomAdapter
+    private var salarySum: Double=0.0
+    private var days: Int=0
+    private var sumIn: Double=0.0
+    private var sumOut: Double=0.0
+    private var bonus=0.0
+    private var tax=0.0
+    private var wage=11.11
+    private var currency="€"
+    private var wage2=11.77
+    private var breakCheck=false
+    private var breakTime: Double= 0.0
+    private var showDays=true
+    private var hours=0.0
+    private var hoursTemp=0.0
+    private lateinit var db:Database
+
     @RequiresApi(Build.VERSION_CODES.O)
     val formatterDate: DateTimeFormatter? = DateTimeFormatter.ofPattern("dd.MM.yyyy")
     @RequiresApi(Build.VERSION_CODES.O)
     val formatterTime: DateTimeFormatter? = DateTimeFormatter.ofPattern("HH:mm")
-    lateinit var db:Database
-
     @RequiresApi(Build.VERSION_CODES.O)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val sharedPreference =  getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
         db=Room.databaseBuilder(this@MainActivity, Database::class.java, "TimeDB").build()
+
         val buttonAdd=findViewById<Button>(R.id.button_add)
         val buttonSettings=findViewById<ImageButton>(R.id.button_settings)
         val listView=findViewById<ListView>(R.id.listView)
         val layoutDays=findViewById<LinearLayout>(R.id.LayoutDays)
         val textDaysHours=findViewById<TextView>(R.id.textdays)
 
-        CustomListAdapter = CustomAdapter(this@MainActivity, R.layout.custom_list_item, list)
-        listView.adapter = CustomListAdapter
+        customListAdapter = CustomAdapter(this@MainActivity, R.layout.custom_list_item, list)
+        listView.adapter = customListAdapter
 
         val inflater: LayoutInflater = getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -70,8 +67,8 @@ class MainActivity : AppCompatActivity() {
             tax=sharedPreference.getFloat("Tax", 0f).toDouble()/100
             wage=sharedPreference.getFloat("Wage", 11.11f).toDouble()
             wage2=sharedPreference.getFloat("Wage2", 11.77f).toDouble()
-            currency=sharedPreference.getString("Currency", "€")
-            BreakCheck=sharedPreference.getBoolean("BreakCheck", false)
+            currency= sharedPreference.getString("Currency", "€").toString()
+            breakCheck=sharedPreference.getBoolean("breakCheck", false)
             breakTime=sharedPreference.getFloat("BreakTime", 0f).toDouble()
         }
 
@@ -88,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 )
         }
-            CustomListAdapter.notifyDataSetChanged()
+            customListAdapter.notifyDataSetChanged()
             sum()
 
         layoutDays.setOnClickListener {
@@ -103,7 +100,6 @@ class MainActivity : AppCompatActivity() {
                 days_amount.text=days.toString()
                 showDays=true
             }
-
         }
 
         buttonAdd.setOnClickListener {
@@ -113,10 +109,9 @@ class MainActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            popupWindowAdd.setFocusable(true)
+            popupWindowAdd.isFocusable = true
             popupWindowAdd.update()
             popupWindowAdd.showAtLocation(buttonAdd, Gravity.CENTER, 0, 1)
-
             popupWindowAdd.dimBehind()
 
             val inputDate=viewAdd.findViewById<EditText>(R.id.inputDate)
@@ -145,7 +140,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             buttonConfirm.setOnClickListener {
-                var id: Int = if (list.size<=0){
+                val id: Int = if (list.size<=0){
                     1
                 } else{
                     (list[list.lastIndex].ID)+1
@@ -176,20 +171,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-            listView.setOnItemClickListener { parent, view, position, id ->
+            listView.setOnItemClickListener { _, _, position, _ ->
                 val viewEdit = inflater.inflate(R.layout.popup_edit, null)
                 val popupWindowEdit = PopupWindow(
                     viewEdit,
                     LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
-                popupWindowEdit.setFocusable(true)
+                popupWindowEdit.isFocusable = true
                 popupWindowEdit.update()
                 popupWindowEdit.showAtLocation(buttonAdd, Gravity.CENTER, 0, 1)
-
                 popupWindowEdit.dimBehind()
 
-               val inputDate=viewEdit.findViewById<EditText>(R.id.inputDate)
+                val inputDate=viewEdit.findViewById<EditText>(R.id.inputDate)
                 val inputCheckIn=viewEdit.findViewById<EditText>(R.id.input_check_in)
                 val inputCheckOut=viewEdit.findViewById<EditText>(R.id.input_check_out)
 
@@ -279,7 +273,7 @@ class MainActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-            popupWindow.setFocusable(true)
+            popupWindow.isFocusable = true
             popupWindow.update()
             popupWindow.showAtLocation(buttonSettings, Gravity.CENTER, 0, 1)
 
@@ -292,46 +286,35 @@ class MainActivity : AppCompatActivity() {
             val inputWage=viewSettings.findViewById<EditText>(R.id.inputWage)
             val inputCurrency=viewSettings.findViewById<EditText>(R.id.inputCurrency)
             val inputWage2=viewSettings.findViewById<EditText>(R.id.inputWage2)
-            val breakCheck=viewSettings.findViewById<CheckBox>(R.id.breakCheck)
+            val breakCheckBox=viewSettings.findViewById<CheckBox>(R.id.breakCheck)
             val inputBreak=viewSettings.findViewById<EditText>(R.id.inputBreak)
             val textBreak=viewSettings.findViewById<TextView>(R.id.textView6)
 
-            /*val sharedPreference =  getSharedPreferences("PREFERENCE_NAME", Context.MODE_PRIVATE)
-            if(sharedPreference.contains("Bonus")){
-                bonus=sharedPreference.getFloat("Bonus", 0f).toDouble()/100
-                tax=sharedPreference.getFloat("Tax", 0f).toDouble()/100
-                wage=sharedPreference.getFloat("Wage", 11.11f).toDouble()
-                currency=sharedPreference.getString("Currency", "€")
-                wage2=sharedPreference.getFloat("Wage2", 11.77f).toDouble()
-                BreakCheck=sharedPreference.getBoolean("BreakCheck", false)
-                BreakTime=
-            }*/
-            //Toast.makeText(this@MainActivity,""+"%.2f".format(wage)+"je to", Toast.LENGTH_LONG ).show()
             inputBonus.setText((bonus * 100).toString())
             inputTax.setText((tax * 100).toString())
             inputWage.setText("%.2f".format(wage))
             inputCurrency.setText(currency)
             inputWage2.setText("%.2f".format(wage2))
-            breakCheck.isChecked=BreakCheck
+            breakCheckBox.isChecked=breakCheck
 
-            if (breakCheck.isChecked){
+            if (breakCheckBox.isChecked){
                 inputBreak.isVisible=true
                 inputBreak.setText((breakTime*60).toString())
                 textBreak.isVisible=true
             }
 
 
-            breakCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+            breakCheckBox.setOnCheckedChangeListener { _, isChecked ->
                 if(isChecked){
                     inputBreak.isVisible=true
                     inputBreak.setText((breakTime*60).toString())
                     textBreak.isVisible=true
-                    BreakCheck=true
+                    breakCheck=true
                 }
                 else{
                     inputBreak.isVisible=false
                     textBreak.isVisible=false
-                    BreakCheck=false
+                    breakCheck=false
             }
             }
 
@@ -352,12 +335,11 @@ class MainActivity : AppCompatActivity() {
 
                 breakTime=inputBreak.text.toString().toDouble()/60
 
-
                 val sharedPreference =  getSharedPreferences(
                     "PREFERENCE_NAME",
                     Context.MODE_PRIVATE
                 )
-                var editor = sharedPreference.edit()
+                val editor = sharedPreference.edit()
                 bonus=inputBonus.text.toString().toDouble()/100
                 tax=inputTax.text.toString().toDouble()/100
                 currency=inputCurrency.text.toString()
@@ -368,7 +350,7 @@ class MainActivity : AppCompatActivity() {
                 editor.putFloat("Wage", inputWage.text.toString().toFloat())
                 editor.putFloat("Wage2", inputWage2.text.toString().toFloat())
                 editor.putString("Currency", inputCurrency.text.toString())
-                editor.putBoolean("BreakCheck", BreakCheck)
+                editor.putBoolean("breakCheck", breakCheck)
                 editor.putFloat("BreakTime", inputBreak.text.toString().toFloat()/60)
                 editor.apply()
                 sum()
@@ -379,7 +361,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun sum(){
-        CustomListAdapter.notifyDataSetChanged()
+        customListAdapter.notifyDataSetChanged()
         CoroutineScope(Dispatchers.Main).launch {
             db.DB_DAO().Read().forEach{
             if (it.checkout_time!=""){
@@ -390,7 +372,7 @@ class MainActivity : AppCompatActivity() {
                     ":"
                 ).toDouble()) / 60)
                 hoursTemp+=(sumOut-sumIn)
-                if (BreakCheck){
+                if (breakCheck){
                     if ((sumOut-sumIn)>6){
                         sumOut-=breakTime
                         hours-=breakTime
@@ -401,22 +383,6 @@ class MainActivity : AppCompatActivity() {
                     true -> ((sumOut - sumIn) * wage) * (bonus)
                     else -> if (it.bonusWage){ (sumOut - sumIn) * wage2} else{ (sumOut - sumIn) * wage}
                 }
-
-                /*salarySum+= if(it.bonus) {
-                    ((sumOut - sumIn) * wage) * (bonus)
-                }
-
-                if(it.bonusWage){
-                    (sumOut - sumIn) * wage2
-                }
-                else{
-                    (sumOut - sumIn) * wage
-                }*/
-
-                /*when(check){
-                    true -> {dateCheck=it.date_column; check=false; days++ }
-                    false -> {if (it.date_column==dateCheck){} else{days++; dateCheck=it.date_column}}
-                }*/
             }
         }
             hours=hoursTemp
@@ -426,8 +392,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun execSum(sum: Double) {
-        /*val salary=findViewById<TextView>(R.id.salary_amount)
-        val daysText=findViewById<TextView>(R.id.days_amount)*/
         salary_amount.text="%.2f".format((sum - (tax * sum)))+currency
         days=list.distinctBy { it.Date }.size
         days_amount.text=days.toString()
