@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:weightSum="200"
+    android:background="#272B2E">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="23"
+        android:orientation="horizontal"
+        android:weightSum="3"
+        android:background="@drawable/custom_title_bkg">
+
+
+        <Space
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"></Space>
+
+        <TextView
+        android:text="Salary Calculator"
+        android:textColor="@color/colorAccent"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+            android:layout_weight="1"
+        >
+           </TextView>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/button_settings"
+                android:layout_margin="10dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_manage"></ImageButton>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:background="@drawable/custom_salary_bkg"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="38"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:weightSum="40"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="28"
+                android:orientation="horizontal"
+                android:weightSum="40"
+                tools:ignore="NestedWeights">
+
+                <LinearLayout
+                    android:paddingRight="15dp"
+                    android:layout_weight="20"
+                    android:layout_width="0dp"
+                    android:orientation="vertical"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:textColor="#f57923"
+                        android:gravity="bottom|center"
+                        android:id="@+id/salary_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:textSize="23sp"
+                        android:text="" />
+
+                    <TextView
+                    android:textColor="#FFFF"
+                    android:id="@+id/textsalary"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:gravity="top|center"
+                    android:text="Expected salary"
+                    android:textSize="15sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/LayoutDays"
+                    android:orientation="vertical"
+                    android:layout_weight="20"
+                    android:layout_width="0dp"
+                    android:weightSum="2"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:textColor="#f57923"
+                        android:gravity="bottom|center"
+                        android:id="@+id/days_amount"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:textSize="23sp"
+                        android:text="" />
+
+                    <TextView
+
+                        android:textColor="#FFFF"
+                        android:id="@+id/textdays"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:gravity="top|center"
+                        android:text="Days worked"
+                        android:textSize="15sp"/>
+
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:layout_gravity="center"
+                android:textColor="#FFFF"
+                android:background="@drawable/custom_button_bkg"
+                android:id="@+id/button_add"
+                android:layout_width="100dp"
+                android:layout_height="0dp"
+                android:layout_weight="12"
+                android:text="Add" />
+
+        </LinearLayout>
+
+
+
+    <!--<LinearLayout
+        android:padding="7dp"
+        android:background="@drawable/custom_header_bkg"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/textView5"
+            android:paddingLeft="28dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:text="Date"
+            android:textColor="#FFFF"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="Check in"
+            android:textAlignment="center"
+            android:textColor="#FFFF"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="Check out"
+            android:textAlignment="center"
+            android:textColor="#FFFF"
+            android:textSize="19sp"
+            android:textStyle="bold" />
+    </LinearLayout>-->
+
+    <LinearLayout
+        android:paddingRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="15"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:background="@drawable/custom_title_bkg">
+        <TextView
+            android:gravity="center"
+            android:textColor="#FFFF"
+            android:layout_width="0dp"
+            android:textSize="18sp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"
+            android:text="Date" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="15"
+            android:layout_height="match_parent"></Space>
+
+        <TextView
+            android:textColor="#FFFF"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:text="Check In" />
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="match_parent"></Space>
+
+        <TextView
+            android:textColor="#FFFF"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="25"
+            android:text="Check out" />
+
+    </LinearLayout>
+
+
+    <ListView
+        android:background="#00FFFFFF"
+        android:id="@+id/listView"
+        android:layout_weight="112"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        android:divider="#4B5359"
+        android:dividerHeight="1dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="12"
+        android:background="@drawable/custom_footer_bkg"></LinearLayout>
+
+</LinearLayout>

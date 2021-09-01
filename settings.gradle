@@ -1,0 +1,2 @@
+rootProject.name='Salary Calculator v2'
+include ':app'
